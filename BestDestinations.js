@@ -3,8 +3,8 @@
  */
 import React from 'react'
 import {StyleSheet, View, Text, FlatList, Image, RefreshControl} from 'react-native'
-import Destination from './Destination'
 import TouchableItem from "./node_modules/react-navigation/lib-rn/views/TouchableItem";
+import {Destination} from "./Destination";
 
 function getDestination(name, description, rating){
   return {
@@ -19,35 +19,35 @@ export default class BestDestinations extends React.Component{
     title: 'Best destinations',
   };
 
-  destinations = [
-    getDestination("Miami", "Editme", 5),
-    getDestination("Austria", "Editme", 4),
-    getDestination("London", "Editme", 3),
-    getDestination("Vegas", "Editme", 3),
-    getDestination("Codlea", "Editme", 5),
-    getDestination("Brasov", "Editme", 4),
-    getDestination("Cluj-Napoca", "Editme", 3),
-    getDestination("Bucuresti", "Editme", 3),
-    getDestination("Blaj", "Editme", 5),
-    getDestination("Indonesia", "Editme", 4),
-    getDestination("China", "Editme", 3),
-    getDestination("Japan", "Editme", 3),
-    getDestination("Singapore", "Editme", 5),
-    getDestination("Whatever", "Editme", 4),
-    getDestination("Destination", "Editme", 3),
-    getDestination("AnotherOne", "Editme", 3),
-    getDestination("Ghimbav", "Editme", 5),
-    getDestination("Cristian", "Editme", 4),
-    getDestination("Tarnita", "Editme", 3),
-    getDestination("Baciu", "Editme", 3),
-  ];
-
   constructor(props){
     super(props);
-    this._updateItem = this._updateItem.bind(this);
+    this._onRefresh = this._onRefresh.bind(this);
     this.state = {
       refreshing: false,
     };
+
+    destinations = [
+      new Destination("Miami", "Editme", 5),
+      new Destination("Austria", "Editme", 4),
+      new Destination("London", "Editme", 3),
+      new Destination("Vegas", "Editme", 3),
+      new Destination("Codlea", "Editme", 5),
+      new Destination("Brasov", "Editme", 4),
+      new Destination("Cluj-Napoca", "Editme", 3),
+      new Destination("Bucuresti", "Editme", 3),
+      new Destination("Blaj", "Editme", 5),
+      new Destination("Indonesia", "Editme", 4),
+      new Destination("China", "Editme", 3),
+      new Destination("Japan", "Editme", 3),
+      new Destination("Singapore", "Editme", 5),
+      new Destination("Whatever", "Editme", 4),
+      new Destination("Destination", "Editme", 3),
+      new Destination("AnotherOne", "Editme", 3),
+      new Destination("Ghimbav", "Editme", 5),
+      new Destination("Cristian", "Editme", 4),
+      new Destination("Tarnita", "Editme", 3),
+      new Destination("Baciu", "Editme", 3),
+    ];
   }
   _onRefresh() {
     this.setState({refreshing:true});
@@ -55,11 +55,6 @@ export default class BestDestinations extends React.Component{
   }
 
   render(){
-    let items =[];
-    for (let i=0; i<this.destinations.length; i++){
-        items.push({key: this.destinations[i].name,
-                    value:this.destinations[i]});
-    }
     const {navigate} = this.props.navigation;
     return (
       <View style={styles.container}>
@@ -70,31 +65,26 @@ export default class BestDestinations extends React.Component{
               onRefresh={this._onRefresh.bind(this)}
             />
           }
-          data={items}
+          data={destinations}
+          keyExtractor={(item, index) => index}
           renderItem={({item}) =>
             <View style={styles.listItemContainer}>
               <Image style={styles.itemImage} source={require('./images/globe.png')}/>
-              <Text style={styles.itemTitle}>{item.value.name}</Text>
+              <Text style={styles.itemTitle}>{item.name}</Text>
               <TouchableItem style={styles.itemDescription}
-                             onPress={() => navigate('Edit', {destname: item.value.name,
-                                                              destdetails: item.value.description,
-                                                              destidx: this.destinations.map(function (dest) {return dest.name}).indexOf(item.value.name),
-                                                              updFunc: this._updateItem})} >
+                             onPress={() => navigate('Edit', {edititm: item,
+                                                              refreshFunc: this._onRefresh})} >
                 <Text style={styles.itemDescriptionText}>
-                  {item.value.description}
+                  {item.description}
                 </Text>
               </TouchableItem>
-              <Text style={styles.itemRating}>{item.value.rating}</Text>
+              <Text style={styles.itemRating}>{item.rating}</Text>
               <Image style={styles.itemImage} source={require('./images/thumbsup.png')}/>
             </View>
           }
         />
       </View>
     );
-  }
-
-  _updateItem(index, newDescription){
-    this.destinations[index].description = newDescription;
   }
 }
 

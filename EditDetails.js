@@ -7,7 +7,7 @@ import BestDestinations from "./BestDestinations";
 
 export default class EditDetails extends React.Component{
   static navigationOptions = ({navigation}) => ({
-    title: `Edit details for ${navigation.state.params.destname}`,
+    title: `Edit details for ${navigation.state.params.edititm.name}`,
   });
 
   render() {
@@ -20,11 +20,12 @@ export default class EditDetails extends React.Component{
           <TextInput style = {styles.editInputTextView}
                      multiline = {true}
                      onChangeText={(text) => this.setState({newDetails: text})}>
-              {params.destdetails}
+              {params.edititm.description}
           </TextInput>
         </View>
         <Button onPress={() => {
-          params.updFunc(params.destidx, this.state.newDetails);
+          params.edititm.description = this.state.newDetails;
+          params.refreshFunc();
           goBack();
         }
         } title="Save changes" style={styles.saveButton}/>
