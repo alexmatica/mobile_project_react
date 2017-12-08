@@ -2,17 +2,10 @@
  * Created by Alex on 11/9/2017.
  */
 import React from 'react'
-import {StyleSheet, View, Text, FlatList, Image, RefreshControl, Button, AsyncStorage} from 'react-native'
+import {StyleSheet, View, Text, FlatList, Image, RefreshControl, Button, AsyncStorage, Alert} from 'react-native'
 import TouchableItem from "./node_modules/react-navigation/lib-rn/views/TouchableItem";
 import {Destination} from "./Destination";
 
-function getDestination(name, description, rating){
-  return {
-    name,
-    description,
-    rating
-  };
-}
 
 export default class BestDestinations extends React.Component{
   static navigationOptions = {
@@ -63,7 +56,7 @@ export default class BestDestinations extends React.Component{
         <Button title="Add Destination"
           onPress={() => {
             let d = new Destination('','',0,'');
-            navigate('Edit', {edititm: d, refreshFunc:this._onRefresh})
+            navigate('Edit', {edititm: d, refreshFunc:this._onRefresh});
           }}>
 
         </Button>
@@ -71,7 +64,7 @@ export default class BestDestinations extends React.Component{
           refreshControl={
             <RefreshControl
                 refreshing={this.state.refreshing}
-                onRefresh={this._onRefresh}
+                onRefresh={this._onRefresh.bind(this)}
             />
           }
           data={this.destinations}
@@ -92,8 +85,18 @@ export default class BestDestinations extends React.Component{
               <Text style={styles.itemRating}>{item.rating}</Text>
               <TouchableItem
                 onPress={() => {
-                    AsyncStorage.removeItem(item.id.toString()).done();
-                    this._onRefresh();
+                    Alert.alert(
+                        'Remove item',
+                        'Are you sure you want to remove this item?',
+                        [
+                            {text: 'I am sure', onPress: () => {
+                                AsyncStorage.removeItem(item.id.toString()).done();
+                                this._onRefresh();
+                            }},
+                            {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                        ],
+                        { cancelable: false }
+                    )
                 }
                 }
               >

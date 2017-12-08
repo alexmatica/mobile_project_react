@@ -49,8 +49,8 @@
       <file leaf-file-name="BestDestinations.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/BestDestinations.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="855">
-              <caret line="72" column="50" lean-forward="true" selection-start-line="72" selection-start-column="50" selection-end-line="72" selection-end-column="50" />
+            <state relative-caret-position="255">
+              <caret line="86" column="32" lean-forward="false" selection-start-line="86" selection-start-column="32" selection-end-line="86" selection-end-column="32" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#41#66#0" expanded="true" />
@@ -62,8 +62,8 @@
       <file leaf-file-name="EditDetails.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/EditDetails.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="9" column="26" lean-forward="false" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
+            <state relative-caret-position="210">
+              <caret line="16" column="18" lean-forward="true" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
               <folding>
                 <element signature="e#41#66#0" expanded="true" />
               </folding>
@@ -83,6 +83,14 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find />
+      <find>edititm.name</find>
+      <find>edititm.</find>
+      <find>edititm.description</find>
+      <find>edititm.id</find>
+      <find>edititm[&quot;description&quot;]</find>
+      <find>params.edititm[&quot;name&quot;]</find>
+      <find>params.edititm[&quot;description&quot;]</find>
+      <find>params.edititm[&quot;id&quot;]</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -263,7 +271,7 @@
       <workItem from="1510296902130" duration="107000" />
       <workItem from="1510306149837" duration="1093000" />
       <workItem from="1512725373342" duration="4933000" />
-      <workItem from="1512753888318" duration="3026000" />
+      <workItem from="1512753888318" duration="5868000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1509375813806</created>
@@ -293,15 +301,21 @@
       <option name="project" value="LOCAL" />
       <updated>1512733072764</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Added alert stuff">
+      <created>1512756928955</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1512756928955</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34529000" />
+    <option name="totallyTimeSpent" value="37371000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-3" y="0" width="1926" height="1058" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -309,7 +323,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20104712" sideWeight="0.89479166" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20104712" sideWeight="0.89479166" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -374,7 +388,8 @@
     <MESSAGE value="Main screen - send email, see list of destinations&#10;Destinations - hard-coded list of destinations&#10;TODO: allow editing details of destinations" />
     <MESSAGE value="Items in list are now editable" />
     <MESSAGE value="A lil' bit of CRUD" />
-    <option name="LAST_COMMIT_MESSAGE" value="A lil' bit of CRUD" />
+    <MESSAGE value="Added alert stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added alert stuff" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -737,8 +752,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/EditDetails.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="9" column="26" lean-forward="false" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
+        <state relative-caret-position="210">
+          <caret line="16" column="18" lean-forward="true" selection-start-line="16" selection-start-column="18" selection-end-line="16" selection-end-column="18" />
           <folding>
             <element signature="e#41#66#0" expanded="true" />
           </folding>
@@ -747,8 +762,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/BestDestinations.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="855">
-          <caret line="72" column="50" lean-forward="true" selection-start-line="72" selection-start-column="50" selection-end-line="72" selection-end-column="50" />
+        <state relative-caret-position="255">
+          <caret line="86" column="32" lean-forward="false" selection-start-line="86" selection-start-column="32" selection-end-line="86" selection-end-column="32" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="e#41#66#0" expanded="true" />
