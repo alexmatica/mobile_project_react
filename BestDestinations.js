@@ -71,7 +71,7 @@ export default class BestDestinations extends React.Component{
           refreshControl={
             <RefreshControl
                 refreshing={this.state.refreshing}
-                onRefresh={this._onRefresh.bind(this)}
+                onRefresh={this._onRefresh}
             />
           }
           data={this.destinations}
