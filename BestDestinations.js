@@ -2,7 +2,7 @@
  * Created by Alex on 11/9/2017.
  */
 import React from 'react'
-import {StyleSheet, View, Text, FlatList, Image, RefreshControl} from 'react-native'
+import {StyleSheet, View, Text, FlatList, Image, RefreshControl, Button, AsyncStorage} from 'react-native'
 import TouchableItem from "./node_modules/react-navigation/lib-rn/views/TouchableItem";
 import {Destination} from "./Destination";
 
@@ -25,47 +25,56 @@ export default class BestDestinations extends React.Component{
     this.state = {
       refreshing: false,
     };
-
-    destinations = [
-      new Destination("Miami", "Editme", 5),
-      new Destination("Austria", "Editme", 4),
-      new Destination("London", "Editme", 3),
-      new Destination("Vegas", "Editme", 3),
-      new Destination("Codlea", "Editme", 5),
-      new Destination("Brasov", "Editme", 4),
-      new Destination("Cluj-Napoca", "Editme", 3),
-      new Destination("Bucuresti", "Editme", 3),
-      new Destination("Blaj", "Editme", 5),
-      new Destination("Indonesia", "Editme", 4),
-      new Destination("China", "Editme", 3),
-      new Destination("Japan", "Editme", 3),
-      new Destination("Singapore", "Editme", 5),
-      new Destination("Whatever", "Editme", 4),
-      new Destination("Destination", "Editme", 3),
-      new Destination("AnotherOne", "Editme", 3),
-      new Destination("Ghimbav", "Editme", 5),
-      new Destination("Cristian", "Editme", 4),
-      new Destination("Tarnita", "Editme", 3),
-      new Destination("Baciu", "Editme", 3),
-    ];
+    this.destinations = []
   }
   _onRefresh() {
     this.setState({refreshing:true});
+    this.destinations = [];
+    AsyncStorage.getAllKeys().then((keys) => {
+      for (let i=0; i<keys.length; i++){
+        AsyncStorage.getItem(keys[i]).then((item) =>{
+          let itemJ = JSON.parse(item);
+          let dest = new Destination(itemJ['name'], itemJ['description'],itemJ['rating'], itemJ['photo']);
+          dest.setId(itemJ['id']);
+          if(itemJ['id'] !== null)
+            this.destinations.push(dest);
+        }).done();
+      }
+    }).then(this.setState({refreshing:false})).done();
+
     this.setState({refreshing:false});
+  }
+
+  componentWillMount(){
+    this._onRefresh();
   }
 
   render(){
     const {navigate} = this.props.navigation;
+    if (this.state.refreshing === true){
+      return (
+          <View style={styles.container}>
+            <Text>Best destinations are loading...</Text>
+          </View>
+      );
+    } else
     return (
       <View style={styles.container}>
+        <Button title="Add Destination"
+          onPress={() => {
+            let d = new Destination('','',0,'');
+            navigate('Edit', {edititm: d, refreshFunc:this._onRefresh})
+          }}>
+
+        </Button>
         <FlatList
           refreshControl={
             <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this._onRefresh.bind(this)}
+                refreshing={this.state.refreshing}
+                onRefresh={this._onRefresh.bind(this)}
             />
           }
-          data={destinations}
+          data={this.destinations}
           keyExtractor={(item, index) => index}
           renderItem={({item}) =>
             <View style={styles.listItemContainer}>
@@ -73,13 +82,23 @@ export default class BestDestinations extends React.Component{
               <Text style={styles.itemTitle}>{item.name}</Text>
               <TouchableItem style={styles.itemDescription}
                              onPress={() => navigate('Edit', {edititm: item,
-                                                              refreshFunc: this._onRefresh})} >
+                                 refreshFunc: this._onRefresh})}
+                             on
+              >
                 <Text style={styles.itemDescriptionText}>
                   {item.description}
                 </Text>
               </TouchableItem>
               <Text style={styles.itemRating}>{item.rating}</Text>
-              <Image style={styles.itemImage} source={require('./images/thumbsup.png')}/>
+              <TouchableItem
+                onPress={() => {
+                    AsyncStorage.removeItem(item.id.toString()).done();
+                    this._onRefresh();
+                }
+                }
+              >
+                <Image style = {styles.itemImage} source={require('./images/thumbsup.png')}/>
+              </TouchableItem>
             </View>
           }
         />
