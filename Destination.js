@@ -9,9 +9,6 @@ export class Destination{
     this.description = description;
     this.rating = rating;
     this.photo = photo;
-  }
-
-  setId(newId){
-    this.id = newId;
+    this.email = null;
   }
 }

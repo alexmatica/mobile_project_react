@@ -2,9 +2,10 @@
  * Created by Alex on 11/9/2017.
  */
 import React from 'react'
-import {Button, StyleSheet, Text, TextInput, View, AsyncStorage, Alert} from "react-native";
+import {Button, StyleSheet, Text, TextInput, View, AsyncStorage, ToastAndroid} from "react-native";
 import {Destination} from "./Destination";
 import {Pie} from 'react-native-pathjs-charts';
+import firebase from 'firebase'
 
 export default class EditDetails extends React.Component{
   static navigationOptions = ({navigation}) => ({
@@ -16,9 +17,36 @@ export default class EditDetails extends React.Component{
     const {params} = this.props.navigation.state;
     this.state = {
       newTitle: params.edititm.name,
-      newDetails: params.edititm.description
+      newDetails: params.edititm.description,
+        newRating: 5
     };
 
+    this.dbRef = firebase.database().ref("traveller");
+    this.isNewItem = params.newItem;
+
+  }
+
+  saveItem(item){
+
+      if (this.state.newTitle === '' || this.state.newDetails === ''){
+          ToastAndroid.show("Name and description are mandatory!", ToastAndroid.SHORT);
+          return;
+      }
+      let newId = 0;
+
+      if (this.isNewItem)
+          newId = this.dbRef.push().key;
+      else
+          newId = item.id;
+
+    this.dbRef.child(newId).update({
+        id: newId,
+        name: this.state.newTitle,
+        description: this.state.newDetails,
+        rating: this.state.newRating,
+        photo: "",
+        email: firebase.auth().currentUser.email
+    });
   }
 
   render() {
@@ -85,37 +113,10 @@ export default class EditDetails extends React.Component{
 
           <View style={styles.saveButtonContainer}>
             <Button onPress={() => {
-                if (params.edititm.name !== '') {
-                  console.log('name not null, updating');
-                    AsyncStorage.getItem(params.edititm.id.toString()).then((item) => {
-                        let itemJ = JSON.parse(item);
-                        itemJ['name'] = this.state.newTitle;
-                        itemJ['description'] = this.state.newDetails;
-                        AsyncStorage.setItem(params.edititm.id.toString(), JSON.stringify(itemJ)).done();
-                    }).done();
-                }
-                else {
-                  console.log('name is null, add new!');
-                    let current_id = -1;
-                  AsyncStorage.getAllKeys().then((keys)=>{
-                    console.log('got all keys, in then');
-                      for (let i = 0; i < keys.length; i++) {
-                          const id = parseInt(keys[i], 10);
-                          if (id > current_id) {
-                              current_id = id;
-                          }
-                      }
-                      console.log('the current id is {}', current_id);
-                      current_id++;
-                      let d = new Destination(this.state.newTitle, this.state.newDetails, 5, 'x.png');
-                      d.setId(current_id);
-                      console.log(JSON.stringify(d));
-                      AsyncStorage.setItem(current_id.toString(), JSON.stringify(d)).done();
-                  }).done();
+                    this.saveItem(params.edititm);
                     params.refreshFunc();
                     goBack();
                 }
-            }
             } title="Save changes"/>
           </View>
           <View style={styles.chartContainer}>
